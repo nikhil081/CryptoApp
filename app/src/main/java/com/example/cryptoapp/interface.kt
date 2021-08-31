@@ -1,20 +1,14 @@
 package com.example.cryptoapp
 
 
+import com.example.cryptoapp.model.Coin
+import com.example.cryptoapp.model.CoinsListing
 import io.reactivex.Single
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Headers
 
 interface Api {
-    companion object {
-        var BASE_URL = "https://api.lunarcrush.com"
-        var API_KEY = "vza9rb6fsohi2bbffb34g"
-    }
-
-    @GET("v2")
-    fun getDetails(
-        @Query("data") data: String?,
-        @Query("symbol") symbol: String?,
-        @Query("key") key: String?
-    ): Single<model>
+    @Headers("X-CMC_PRO_API_KEY: d2014cf6-5886-42cb-8621-081eb0ea593f")
+    @GET("v1/cryptocurrency/listings/latest")
+    fun getDetails(): Single<CoinsListing>
 }
