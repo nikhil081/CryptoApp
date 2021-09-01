@@ -1,6 +1,5 @@
 package com.example.cryptoapp
 
-import com.example.cryptoapp.model.Coin
 import com.example.cryptoapp.model.CoinsListing
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Single
