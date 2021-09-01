@@ -2,23 +2,23 @@ package com.example.cryptoapp.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.CryptoViewModel
 import com.example.cryptoapp.R
+import com.example.cryptoapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CryptoViewModel
-    lateinit var dataa: TextView
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initComponents()
     }
 
     private fun initComponents() {
-        dataa = findViewById<TextView>(R.id.data)
         viewModel = ViewModelProvider(this).get(CryptoViewModel::class.java)
         viewModel.fetchFromRemote()
         observeViewModel()
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.dataa.observe(this, { data ->
             data?.let {
                 Log.i("success", "success")
-                dataa.text = data.get(0).quote?.USD?.price.toString()
+                binding.data.text = data[0].quote?.USD?.price.toString()
             }
         })
         viewModel.error.observe(this, { error ->
