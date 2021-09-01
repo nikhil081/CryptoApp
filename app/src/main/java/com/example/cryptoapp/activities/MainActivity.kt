@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.dataa.observe(this, { data ->
+        viewModel.coinsList.observe(this, { data ->
             data?.let {
                 Log.i("success", "success")
-                binding.data.text = data[0].quote?.USD?.price.toString()
+                binding.coin = data[0]
             }
         })
         viewModel.error.observe(this, { error ->

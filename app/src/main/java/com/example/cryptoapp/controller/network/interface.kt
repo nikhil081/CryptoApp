@@ -2,13 +2,15 @@ package com.example.cryptoapp
 
 
 import com.example.cryptoapp.model.Coin
-import com.example.cryptoapp.model.CoinsListing
+import com.example.cryptoapp.model.CoinsListingResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 
 interface Api {
-    @Headers("X-CMC_PRO_API_KEY: d2014cf6-5886-42cb-8621-081eb0ea593f")
-    @GET("v1/cryptocurrency/listings/latest")
-    fun getDetails(): Single<CoinsListing>
+    @GET("api/v3/coins/markets")
+    fun getDetails( @Query("vs_currency") vs_currency: String?,
+                    @Query("order") order: String?,
+                    @Query("per_page") per_page: Int?): Single<CoinsListingResponse>
 }
