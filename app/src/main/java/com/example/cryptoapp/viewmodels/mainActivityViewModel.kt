@@ -23,7 +23,6 @@ class CryptoViewModel() : ViewModel() {
                 object : DisposableSingleObserver<CoinsListing>() {
                     override fun onSuccess(list: CoinsListing) {
                         dataa.value = list.data
-                        error.value = false
                         loading.value = false
                     }
 

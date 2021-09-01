@@ -1,10 +1,12 @@
-package com.example.cryptoapp
+package com.example.cryptoapp.activities
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptoapp.CryptoViewModel
+import com.example.cryptoapp.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: CryptoViewModel
@@ -26,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.dataa.observe(this, { data ->
             data?.let {
                 Log.i("success", "success")
-                Log.i("success", data.get(0).quote?.USD?.price.toString())
                 dataa.text = data.get(0).quote?.USD?.price.toString()
             }
         })
