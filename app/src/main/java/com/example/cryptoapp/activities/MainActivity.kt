@@ -2,8 +2,8 @@ package com.example.cryptoapp.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,8 +12,9 @@ import com.example.cryptoapp.CoinsListingAdapter
 import com.example.cryptoapp.CryptoViewModel
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityMainBinding
+import com.example.cryptoapp.model.Coin
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoinsListingAdapter.CoinItemClickListener {
     private lateinit var viewModel: CryptoViewModel
     lateinit var binding: ActivityMainBinding
     private lateinit var adapter: CoinsListingAdapter
@@ -28,19 +29,17 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(CryptoViewModel::class.java)
         viewModel.fetchFromRemote()
         observeViewModel()
-        setCoinsListAdapter()
-    }
-    private fun setCoinsListAdapter() {
-        val layoutManager = LinearLayoutManager(baseContext, RecyclerView.VERTICAL, false)
-        binding.rvCoinsList.layoutManager = layoutManager
-        adapter = CoinsListingAdapter()
-        binding.rvCoinsList.adapter = adapter
     }
 
     private fun observeViewModel() {
         viewModel.coinsList.observe(this, { data ->
             data?.let {
                 Log.i("success", "success")
+                val layoutManager = LinearLayoutManager(baseContext, RecyclerView.VERTICAL, false)
+                binding.rvCoinsList.layoutManager = layoutManager
+                adapter = CoinsListingAdapter(this)
+                adapter.updateList(data)
+                binding.rvCoinsList.adapter = adapter
             }
         })
         viewModel.error.observe(this, { error ->
@@ -53,5 +52,9 @@ class MainActivity : AppCompatActivity() {
                 Log.i("isLoading", "isLoading")
             }
         })
+    }
+
+    override fun onCoinItemClicked(coin: Coin, position: Int) {
+        Toast.makeText(this, coin.current_price.toString(), Toast.LENGTH_SHORT).show()
     }
 }
