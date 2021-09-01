@@ -1,14 +1,13 @@
 package com.example.cryptoapp
 
-import com.example.cryptoapp.model.Coin
-import com.example.cryptoapp.model.CoinsListing
+import com.example.cryptoapp.model.CoinsListingResponse
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiService {
-    private val BASE_URL = "https://pro-api.coinmarketcap.com/"
+    private val BASE_URL = "https://api.coingecko.com/"
     private val api = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -16,7 +15,7 @@ class ApiService {
         .build()
         .create(Api::class.java)
 
-    fun getDetails(): Single<CoinsListing> {
-        return api.getDetails()
+    fun getDetails(): Single<CoinsListingResponse> {
+        return api.getDetails("usd","market_cap_desc",100)
     }
 }

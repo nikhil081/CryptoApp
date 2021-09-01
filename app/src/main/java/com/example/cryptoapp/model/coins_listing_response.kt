@@ -1,52 +1,38 @@
 package com.example.cryptoapp.model
 
-data class CoinsListing(
-    var data: List<Coin>?,
-    var status: Status?
-)
+class CoinsListingResponse : ArrayList<Coin>()
 
 data class Coin(
+    var ath: Double?,
+    var ath_change_percentage: Double?,
+    var ath_date: String?,
+    var atl: Double?,
+    var atl_change_percentage: Double?,
+    var atl_date: String?,
     var circulating_supply: Double?,
-    var cmc_rank: Int?,
-    var date_added: String?,
-    var id: Int?,
+    var current_price: Float?,
+    var fully_diluted_valuation: Double?,
+    var high_24h: Double?,
+    var id: String?,
+    var image: String?,
     var last_updated: String?,
+    var low_24h: Double?,
+    var market_cap: Double?,
+    var market_cap_change_24h: Double?,
+    var market_cap_change_percentage_24h: Double?,
+    var market_cap_rank: Double?,
     var max_supply: Double?,
     var name: String?,
-    var num_market_pairs: Int?,
-    var platform: Any?,
-    var quote: Quote?,
-    var slug: String?,
+    var price_change_24h: Double?,
+    var price_change_percentage_24h: Double?,
+    var roi: Roi?,
     var symbol: String?,
-    var tags: List<String>?,
-    var total_supply: Double?
+    var total_supply: Double?,
+    var total_volume: Double?
 )
 
-data class Status(
-    var credit_count: Int?,
-    var elapsed: Int?,
-    var error_code: Int?,
-    var error_message: Any?,
-    var notice: Any?,
-    var timestamp: String?,
-    var total_count: Int?
-)
-
-data class Quote(
-    var USD: USD?
-)
-
-data class USD(
-    var fully_diluted_market_cap: Double?,
-    var last_updated: String?,
-    var market_cap: Double?,
-    var market_cap_dominance: Double?,
-    var percent_change_1h: Double?,
-    var percent_change_24h: Double?,
-    var percent_change_30d: Double?,
-    var percent_change_60d: Double?,
-    var percent_change_7d: Double?,
-    var percent_change_90d: Double?,
-    var price: Double?,
-    var volume_24h: Double?
+data class Roi(
+    var currency: String?,
+    var percentage: Double?,
+    var times: Double?
 )

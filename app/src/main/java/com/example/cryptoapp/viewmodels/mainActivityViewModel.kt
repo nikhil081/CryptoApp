@@ -1,17 +1,16 @@
 package com.example.cryptoapp
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cryptoapp.model.Coin
-import com.example.cryptoapp.model.CoinsListing
+import com.example.cryptoapp.model.CoinsListingResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 class CryptoViewModel() : ViewModel() {
-    val dataa = MutableLiveData<List<Coin>>()
+    val coinsList = MutableLiveData<List<Coin>>()
     val error = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
     private val service = ApiService()
@@ -20,10 +19,9 @@ class CryptoViewModel() : ViewModel() {
         loading.value = true
         disposable.add(service.getDetails().subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(
-                object : DisposableSingleObserver<CoinsListing>() {
-                    override fun onSuccess(list: CoinsListing) {
-                        dataa.value = list.data
-                        error.value = false
+                object : DisposableSingleObserver<CoinsListingResponse>() {
+                    override fun onSuccess(list: CoinsListingResponse) {
+                        coinsList.value = list
                         loading.value = false
                     }
 
