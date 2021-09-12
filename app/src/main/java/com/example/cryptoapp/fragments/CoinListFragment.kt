@@ -2,9 +2,7 @@ package com.example.cryptoapp.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -44,6 +42,33 @@ class CoinListFragment : Fragment(), CoinsListingAdapter.CoinItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initComponents()
+        setHasOptionsMenu(true);
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        val menuItem = menu.findItem(R.id.menu)
+
+        if (menuItem != null) {
+            val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
+            searchView.setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    adapter.filter.filter(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    adapter.filter.filter(newText)
+                    return false
+                }
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initComponents() {
@@ -59,7 +84,7 @@ class CoinListFragment : Fragment(), CoinsListingAdapter.CoinItemClickListener {
                 val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 binding.rvCoinsList.layoutManager = layoutManager
                 adapter = context?.let { it1 -> CoinsListingAdapter(it1, this) }!!
-                adapter.updateList(data)
+                adapter.addData(data)
                 binding.rvCoinsList.adapter = adapter
             }
         })
