@@ -4,6 +4,7 @@ package com.example.cryptoapp
 import com.example.cryptoapp.model.Coin
 import com.example.cryptoapp.model.CoinsListingResponse
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
