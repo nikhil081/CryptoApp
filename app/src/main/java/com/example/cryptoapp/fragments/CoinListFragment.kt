@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -102,8 +103,10 @@ class CoinListFragment : Fragment(), CoinsListingAdapter.CoinItemClickListener {
 
     override fun onCoinItemClicked(coin: Coin, position: Int, view: View) {
         Toast.makeText(context, coin.current_price.toString(), Toast.LENGTH_SHORT).show()
+        val id = coin.id
+        val bundle = bundleOf("id" to id)
         Navigation.findNavController(view)
-            .navigate(R.id.navigateToDetailScreen, null)
+            .navigate(R.id.navigateToDetailScreen, bundle)
     }
 
 }
